@@ -1,4 +1,3 @@
-
 'use server';
 /**
  * @fileOverview A Genkit flow to search for prescribers based on medication(s), zipcode, and search radius.
@@ -34,9 +33,10 @@ const PrescriberSchema = z.object({
   distance: z.number().optional().describe("Approximate distance in miles from the searched zipcode center."),
 });
 
+// Update the output schema to match what the frontend expects
 const PrescriberSearchOutputSchema = z.object({
-    results: z.array(PrescriberSchema),
-    message: z.string().optional(),
+  results: z.array(PrescriberSchema),
+  message: z.string().optional(),
 });
 export type PrescriberSearchOutput = z.infer<typeof PrescriberSearchOutputSchema>;
 

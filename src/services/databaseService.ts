@@ -1,6 +1,8 @@
 'use server';
 
 import { Client, type QueryResultRow } from 'pg';
+import fs from 'fs';
+import path from 'path';
 
 const dbConfig = {
   host: process.env.PG_HOST,
@@ -9,9 +11,32 @@ const dbConfig = {
   password: process.env.NEXT_DB_PASSWORD,
   port: process.env.PG_PORT ? parseInt(process.env.PG_PORT, 10) : 5432,
   ssl: process.env.PG_SSLMODE === 'require'
-    ? { rejectUnauthorized: false }
+    ? {
+        rejectUnauthorized: true, // Enforce certificate validation
+        ca: process.env.PG_SSL_CA_CONTENT
+          ? process.env.PG_SSL_CA_CONTENT.replace(/\\n/g, '\n') // Use content if available
+          : (process.env.PG_SSL_CA_PATH
+              ? fs.readFileSync(path.resolve(process.env.PG_SSL_CA_PATH)).toString() // Fallback to path
+              : undefined),
+      }
     : undefined,
 };
+
+// --- BEGIN DIAGNOSTIC LOGGING ---
+if (dbConfig.ssl) {
+  console.log("DatabaseService: PG_SSLMODE=", process.env.PG_SSLMODE);
+  console.log("DatabaseService: SSL config applied:", JSON.stringify({
+    rejectUnauthorized: dbConfig.ssl.rejectUnauthorized,
+    ca_content_present: !!process.env.PG_SSL_CA_CONTENT,
+    ca_path_present: !!process.env.PG_SSL_CA_PATH,
+    ca_loaded_length: dbConfig.ssl.ca ? dbConfig.ssl.ca.length : 0,
+    ca_loaded_start: dbConfig.ssl.ca ? dbConfig.ssl.ca.substring(0, 30) : 'N/A',
+    ca_loaded_end: dbConfig.ssl.ca ? dbConfig.ssl.ca.substring(dbConfig.ssl.ca.length - 30) : 'N/A'
+  }));
+} else {
+  console.log("DatabaseService: SSL not configured (PG_SSLMODE is not 'require')");
+}
+// --- END DIAGNOSTIC LOGGING ---
 
 export interface PrescriberRecord extends QueryResultRow {
   npi: bigint; // NPI is crucial for unique identification
@@ -211,6 +236,7 @@ export async function findPrescribersInDB({ medicationNames, zipcode, searchRadi
     ];
 
     const res = await client.query<PrescriberRecord>(query, params);
+    console.log("Database query returned:", res.rows.length, "rows."); // Added log
     return res.rows;
 
   } catch (error: any) {
@@ -248,31 +274,72 @@ export interface UserPayment {
 }
 
 // Store or update user payment status
-export async function upsertUserPayment({ user_id, plan, status, payment_id }: { user_id: string; plan: string; status: PaymentStatus; payment_id: string; }) {
+export async function upsertUserPayment(paymentData: {
+  user_id: string;
+  plan: string;
+  status: string;
+  payment_id: string;
+  amount?: number; // Optional: if not provided, will be NULL in DB or skipped if column disallows NULL without default
+  currency?: string; // Optional: defaults to 'USD' or as per DB default
+}): Promise<void> {
+  const { user_id, plan, status, payment_id, amount, currency = 'USD' } = paymentData;
   const client = new Client(dbConfig);
   try {
     await client.connect();
-    await client.query(
-      `INSERT INTO user_payments (user_id, plan, status, payment_id, updated_at)
-       VALUES ($1, $2, $3, $4, NOW())
-       ON CONFLICT (user_id) DO UPDATE SET plan = $2, status = $3, payment_id = $4, updated_at = NOW()`,
-      [user_id, plan, status, payment_id]
-    );
+    const query = `
+      INSERT INTO app_schema.user_payments (user_id, plan_type, status, payment_id, amount, currency, updated_at)
+      VALUES ($1, $2, $3, $4, $5, $6, NOW())
+      ON CONFLICT (user_id, payment_id) 
+      DO UPDATE SET 
+        plan_type = EXCLUDED.plan_type, 
+        status = EXCLUDED.status, 
+        amount = EXCLUDED.amount, 
+        currency = EXCLUDED.currency, 
+        updated_at = NOW()
+      RETURNING id; 
+    `;
+    // Ensure amount is passed correctly, defaulting to null if undefined
+    const params = [user_id, plan, status, payment_id, amount === undefined ? null : amount, currency];
+    await client.query(query, params);
+    console.log(`Upserted payment for user ${user_id}, payment_id ${payment_id} with status ${status} into app_schema.user_payments`);
+  } catch (error) {
+    console.error('Error in upsertUserPayment:', error);
+    throw new Error('Failed to update user payment information in the database.');
   } finally {
     await client.end();
   }
 }
 
-// Retrieve user payment status
+// Retrieve the latest payment status for a user
 export async function getUserPayment(user_id: string): Promise<UserPayment | null> {
   const client = new Client(dbConfig);
   try {
     await client.connect();
-    const res = await client.query<UserPayment>(
-      'SELECT * FROM user_payments WHERE user_id = $1',
-      [user_id]
-    );
-    return res.rows[0] || null;
+    // Ensure we query the correct table `app_schema.user_payments`
+    const query = `
+      SELECT user_id, plan_type as plan, status, payment_id, updated_at 
+      FROM app_schema.user_payments  -- Querying the correct schema and table
+      WHERE user_id = $1
+      ORDER BY updated_at DESC
+      LIMIT 1;
+    `;
+    const res = await client.query(query, [user_id]);
+    if (res.rows.length > 0) {
+      const row = res.rows[0];
+      return {
+        user_id: row.user_id,
+        plan: row.plan,
+        status: row.status as PaymentStatus,
+        payment_id: row.payment_id,
+        updated_at: new Date(row.updated_at),
+      };
+    }
+    return null;
+  } catch (error) {
+    console.error('Error in getUserPayment:', error);
+    // Avoid throwing generic error, let caller handle null or specific error scenarios.
+    // Consider if specific error types or messages are needed for the caller.
+    return null; // Or rethrow if the caller needs to know about the DB error explicitly
   } finally {
     await client.end();
   }

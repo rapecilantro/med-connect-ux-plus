@@ -1,4 +1,3 @@
-
 "use server";
 
 import { findPrescribers, type PrescriberSearchInput as FlowInputType } from '@/ai/flows/prescriber-search-flow'; // Renamed to FlowInputType to avoid conflict
@@ -13,6 +12,7 @@ export interface ClientPrescriberSearchInput {
 // This interface matches the Genkit flow's actual output structure
 export interface PrescriberSearchActionOutput {
   results: {
+    npi: string;
     prescriberName: string;
     credentials?: string;
     specialization?: string;
@@ -54,6 +54,7 @@ export async function findPrescribersAction(input: ClientPrescriberSearchInput):
     // that matches { results: PrescriberResult[], message?: string }
     // which is compatible with PrescriberSearchActionOutput
     const result = await findPrescribers(flowInput);
+    console.log("Response from findPrescribers flow:", result); // Log the full result
     return result;
   } catch (error: any) {
     console.error("Error in findPrescribersAction:", error);

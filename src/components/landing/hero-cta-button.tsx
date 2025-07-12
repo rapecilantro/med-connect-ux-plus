@@ -13,7 +13,7 @@ export function HeroCtaButton() {
     return (
       <Link href="/finder" passHref>
         <Button size="lg" className="text-lg px-10 py-7 shadow-lg hover:shadow-xl transition-shadow">
-          Go to Finder App
+          Find My Doctor
           <ArrowRight className="ml-2 h-5 w-5" />
         </Button>
       </Link>
@@ -23,7 +23,7 @@ export function HeroCtaButton() {
   return (
     <Link href="/sign-up" passHref>
       <Button size="lg" className="text-lg px-10 py-7 shadow-lg hover:shadow-xl transition-shadow">
-        Get Started Free
+        Start Your Search
         <UserPlus className="ml-2 h-5 w-5" />
       </Button>
     </Link>

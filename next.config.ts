@@ -1,7 +1,6 @@
 import type {NextConfig} from 'next';
 
 const nextConfig: NextConfig = {
-  /* config options here */
   typescript: {
     ignoreBuildErrors: true,
   },
@@ -18,6 +17,28 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  webpack: (config, { isServer }) => {
+    // Handle missing modules
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      fs: false,
+      net: false,
+      tls: false,
+    };
+
+    // Ignore problematic modules during client-side builds
+    if (!isServer) {
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        '@opentelemetry/exporter-jaeger': false,
+        'handlebars': false,
+      };
+    }
+
+    return config;
+  },
+  // Moved from experimental to top level
+  serverExternalPackages: ['@genkit-ai/core', 'genkit'],
 };
 
 export default nextConfig;
