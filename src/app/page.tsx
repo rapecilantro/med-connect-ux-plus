@@ -6,6 +6,7 @@ import { BriefcaseMedical, MapPinned, ShieldCheck, Zap, Target, Lightbulb, UserC
 import Image from 'next/image';
 import Link from 'next/link';
 import { HeroCtaButton } from '@/components/landing/hero-cta-button';
+import { VideoHero } from '@/components/video-hero';
 
 export default function LandingPage() {
   return (
@@ -22,31 +23,22 @@ export default function LandingPage() {
             <BriefcaseMedical className="h-16 w-16 text-primary mx-auto mb-6" />
           </div>
           <Badge variant="secondary" className="mb-6 px-4 py-2 text-sm font-medium">
-            🚀 Trusted by Healthcare Professionals
+            � Trusted by Thousands of Patients
           </Badge>
           <h1 className="text-4xl md:text-6xl font-bold mb-6 text-foreground bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-            RX Prescribers: Find Care, <span className="text-primary">Effortlessly</span>.
+            Find Doctors Who Prescribe <span className="text-primary">Your Medication</span>
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground mb-10 max-w-3xl mx-auto leading-relaxed">
-            Quickly locate medical prescribers by medication and zip code within your desired radius. Get the information you need, when you need it, with our powerful and intuitive search tool.
+            Need a specific medication? Find doctors and specialists near you who prescribe it. Search by medication name and location to connect with the right healthcare provider for your needs.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
             <HeroCtaButton />
             <Button variant="outline" size="lg" className="group">
               <Search className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform" />
-              Watch Demo
+              See How It Works
             </Button>
           </div>
-          <div className="mt-16 md:mt-20">
-            <Image
-              src="/graphics/Screenshot_2025-06-09_11-25-27.png"
-              alt="RX Prescribers Application Main Interface"
-              width={1200}
-              height={600}
-              className="rounded-xl shadow-2xl mx-auto border-2 border-primary/20 hover:scale-105 transition-transform duration-500"
-              priority
-            />
-          </div>
+          <VideoHero />
         </div>
       </section>
 
@@ -56,27 +48,27 @@ export default function LandingPage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div className="space-y-2 group">
               <div className="text-3xl md:text-4xl font-bold group-hover:scale-110 transition-transform duration-300">
-                <AnimatedCounter end={10000} suffix="+" />
+                <AnimatedCounter end={25000} suffix="+" />
               </div>
-              <div className="text-primary-foreground/80">Prescribers Found</div>
+              <div className="text-primary-foreground/80">Doctors Listed</div>
             </div>
             <div className="space-y-2 group">
               <div className="text-3xl md:text-4xl font-bold group-hover:scale-110 transition-transform duration-300">
-                <AnimatedCounter end={50000} suffix="+" />
+                <AnimatedCounter end={100000} suffix="+" />
               </div>
-              <div className="text-primary-foreground/80">Searches Completed</div>
+              <div className="text-primary-foreground/80">Patient Searches</div>
             </div>
             <div className="space-y-2 group">
               <div className="text-3xl md:text-4xl font-bold group-hover:scale-110 transition-transform duration-300">
-                <AnimatedCounter end={99.9} suffix="%" />
+                <AnimatedCounter end={500} suffix="+" />
               </div>
-              <div className="text-primary-foreground/80">Uptime</div>
+              <div className="text-primary-foreground/80">Medications Covered</div>
             </div>
             <div className="space-y-2 group">
               <div className="text-3xl md:text-4xl font-bold group-hover:scale-110 transition-transform duration-300">
-                <AnimatedCounter end={2} prefix="<" suffix="s" />
+                <AnimatedCounter end={50} />
               </div>
-              <div className="text-primary-foreground/80">Average Response</div>
+              <div className="text-primary-foreground/80">States Covered</div>
             </div>
           </div>
         </div>
@@ -87,9 +79,9 @@ export default function LandingPage() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <Badge variant="outline" className="mb-4">Features</Badge>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">Why Choose RX Prescribers?</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">Why Patients Choose Us</h2>
             <p className="text-muted-foreground mb-12 md:mb-16 max-w-xl mx-auto">
-              Our platform provides powerful, easy-to-use tools to connect you with the right healthcare providers quickly and efficiently.
+              Find the right doctor for your medication needs with our simple, powerful search platform designed specifically for patients.
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
@@ -98,10 +90,10 @@ export default function LandingPage() {
                 <div className="p-4 bg-primary/10 rounded-full mb-4 inline-block group-hover:scale-110 transition-transform duration-300">
                   <Target className="h-10 w-10 text-primary" />
                 </div>
-                <CardTitle className="text-xl font-semibold">Precision Search</CardTitle>
+                <CardTitle className="text-xl font-semibold">Find Your Medication</CardTitle>
               </CardHeader>
               <CardContent className="text-center text-muted-foreground">
-                Easily search prescribers by specific medication names (brand or generic) with our intelligent matching algorithm.
+                Search for doctors who prescribe your specific medication by entering the brand name or generic name.
               </CardContent>
             </Card>
             <Card className="group shadow-lg hover:shadow-2xl transition-all duration-300 bg-card transform hover:-translate-y-2 border-0 bg-gradient-to-br from-card to-card/50">
@@ -109,10 +101,10 @@ export default function LandingPage() {
                 <div className="p-4 bg-primary/10 rounded-full mb-4 inline-block group-hover:scale-110 transition-transform duration-300">
                   <MapPinned className="h-10 w-10 text-primary" />
                 </div>
-                <CardTitle className="text-xl font-semibold">Smart Location</CardTitle>
+                <CardTitle className="text-xl font-semibold">Near Your Location</CardTitle>
               </CardHeader>
               <CardContent className="text-center text-muted-foreground">
-                Define your search area with customizable radius options around any US zipcode for optimal convenience.
+                Set your location and preferred distance to find doctors and specialists in your area who can help.
               </CardContent>
             </Card>
             <Card className="group shadow-lg hover:shadow-2xl transition-all duration-300 bg-card transform hover:-translate-y-2 border-0 bg-gradient-to-br from-card to-card/50">
@@ -120,10 +112,10 @@ export default function LandingPage() {
                 <div className="p-4 bg-primary/10 rounded-full mb-4 inline-block group-hover:scale-110 transition-transform duration-300">
                   <Zap className="h-10 w-10 text-primary" />
                 </div>
-                <CardTitle className="text-xl font-semibold">Lightning Fast</CardTitle>
+                <CardTitle className="text-xl font-semibold">Get Results Instantly</CardTitle>
               </CardHeader>
               <CardContent className="text-center text-muted-foreground">
-                Get instant results with our optimized search engine that processes millions of records in seconds.
+                Receive a list of qualified doctors with their contact information and office locations in seconds.
               </CardContent>
             </Card>
           </div>
@@ -133,30 +125,30 @@ export default function LandingPage() {
       {/* Stats Section */}
       <section className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-foreground">Our Impact at a Glance</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-foreground">Helping Patients Connect with Care</h2>
           <p className="text-center text-muted-foreground mb-12 md:mb-16 max-w-xl mx-auto">
-            RX Prescribers has transformed the way patients and providers connect. Here are some key highlights.
+            Our platform has helped thousands of patients find the right doctors for their medication needs.
           </p>
           <div className="grid md:grid-cols-4 gap-8 text-center">
             <div className="flex flex-col items-center">
               <TrendingUp className="h-10 w-10 text-primary mb-2" />
-              <h3 className="text-2xl font-bold mb-1 text-foreground">10,000+</h3>
-              <p className="text-muted-foreground">Successful Connections</p>
+              <h3 className="text-2xl font-bold mb-1 text-foreground">15,000+</h3>
+              <p className="text-muted-foreground">Patients Helped</p>
             </div>
             <div className="flex flex-col items-center">
               <Clock className="h-10 w-10 text-primary mb-2" />
-              <h3 className="text-2xl font-bold mb-1 text-foreground">2 Min</h3>
+              <h3 className="text-2xl font-bold mb-1 text-foreground">1 Min</h3>
               <p className="text-muted-foreground">Average Search Time</p>
             </div>
             <div className="flex flex-col items-center">
               <CheckCircle className="h-10 w-10 text-primary mb-2" />
-              <h3 className="text-2xl font-bold mb-1 text-foreground">99%</h3>
-              <p className="text-muted-foreground">Satisfaction Rate</p>
+              <h3 className="text-2xl font-bold mb-1 text-foreground">98%</h3>
+              <p className="text-muted-foreground">Find a Match</p>
             </div>
             <div className="flex flex-col items-center">
               <Star className="h-10 w-10 text-primary mb-2" />
-              <h3 className="text-2xl font-bold mb-1 text-foreground">5/5</h3>
-              <p className="text-muted-foreground">Average Rating</p>
+              <h3 className="text-2xl font-bold mb-1 text-foreground">4.8/5</h3>
+              <p className="text-muted-foreground">Patient Rating</p>
             </div>
           </div>
         </div>
@@ -165,20 +157,20 @@ export default function LandingPage() {
       {/* Screenshots Gallery Section */}
       <section className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-foreground">See RX Prescribers in Action</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-foreground">See How Easy It Is</h2>
           <p className="text-center text-muted-foreground mb-12 md:mb-16 max-w-2xl mx-auto">
-            Explore our intuitive interface designed to make finding healthcare providers simple and efficient.
+            Our simple interface makes it easy for patients to find doctors who prescribe their needed medications.
           </p>
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div className="space-y-6">
               <div>
-                <h3 className="text-2xl font-semibold mb-3 text-foreground">Advanced Search Interface</h3>
+                <h3 className="text-2xl font-semibold mb-3 text-foreground">Simple Search</h3>
                 <p className="text-muted-foreground mb-4">
-                  Our clean, user-friendly search interface makes it easy to input medication names, zip codes, and radius preferences for precise results.
+                  Just enter your medication name and location. Our system will find doctors who prescribe it in your area.
                 </p>
                 <Image
                   src="/graphics/Screenshot_2025-06-09_11-27-57.png"
-                  alt="RX Prescribers Search Interface"
+                  alt="Doctor Search Interface for Patients"
                   width={600}
                   height={400}
                   className="rounded-lg shadow-lg border border-primary/20"
@@ -187,13 +179,13 @@ export default function LandingPage() {
             </div>
             <div className="space-y-6">
               <div>
-                <h3 className="text-2xl font-semibold mb-3 text-foreground">Comprehensive Results</h3>
+                <h3 className="text-2xl font-semibold mb-3 text-foreground">Doctor Information</h3>
                 <p className="text-muted-foreground mb-4">
-                  View detailed prescriber information including names, addresses, and medication matches in an organized, easy-to-read format.
+                  Get detailed information about each doctor including their practice location, contact details, and specialties.
                 </p>
                 <Image
                   src="/graphics/Screenshot_2025-06-09_11-29-18.png"
-                  alt="RX Prescribers Results View"
+                  alt="Doctor Search Results for Patients"
                   width={600}
                   height={400}
                   className="rounded-lg shadow-lg border border-primary/20"
@@ -209,9 +201,9 @@ export default function LandingPage() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <Badge variant="outline" className="mb-4">Testimonials</Badge>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">What Healthcare Professionals Say</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">What Our Patients Say</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Join thousands of healthcare professionals who trust RX Prescribers for their daily practice needs.
+              Hear from patients who have successfully found the right doctors for their medication needs.
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
@@ -223,15 +215,15 @@ export default function LandingPage() {
                   ))}
                 </div>
                 <p className="text-muted-foreground mb-4 italic">
-                  "RX Prescribers has revolutionized how I find specialists for my patients. The search is incredibly fast and accurate."
+                  "I was struggling to find a doctor who could prescribe my ADHD medication after moving to a new city. This site helped me find three doctors within 10 minutes!"
                 </p>
                 <div className="flex items-center">
                   <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mr-3">
                     <UserCheck className="h-5 w-5 text-primary" />
                   </div>
                   <div>
-                    <div className="font-semibold text-sm">Dr. Sarah Johnson</div>
-                    <div className="text-xs text-muted-foreground">Family Medicine Physician</div>
+                    <div className="font-semibold text-sm">Sarah M.</div>
+                    <div className="text-xs text-muted-foreground">Austin, TX</div>
                   </div>
                 </div>
               </CardContent>
@@ -244,15 +236,15 @@ export default function LandingPage() {
                   ))}
                 </div>
                 <p className="text-muted-foreground mb-4 italic">
-                  "The radius search feature is a game-changer. I can quickly find prescribers near my patients' locations."
+                  "My insurance changed and I needed to find a new rheumatologist for my arthritis medication. Found a great doctor just 15 minutes from home!"
                 </p>
                 <div className="flex items-center">
                   <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mr-3">
                     <UserCheck className="h-5 w-5 text-primary" />
                   </div>
                   <div>
-                    <div className="font-semibold text-sm">Dr. Michael Chen</div>
-                    <div className="text-xs text-muted-foreground">Internal Medicine</div>
+                    <div className="font-semibold text-sm">Michael R.</div>
+                    <div className="text-xs text-muted-foreground">Denver, CO</div>
                   </div>
                 </div>
               </CardContent>
@@ -265,15 +257,15 @@ export default function LandingPage() {
                   ))}
                 </div>
                 <p className="text-muted-foreground mb-4 italic">
-                  "Simple, efficient, and reliable. This tool saves me hours every week when coordinating patient care."
+                  "As a senior citizen, I was worried about finding a doctor who understands my complex medication needs. This service was a lifesaver!"
                 </p>
                 <div className="flex items-center">
                   <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mr-3">
                     <UserCheck className="h-5 w-5 text-primary" />
                   </div>
                   <div>
-                    <div className="font-semibold text-sm">Dr. Emily Rodriguez</div>
-                    <div className="text-xs text-muted-foreground">Pediatric Specialist</div>
+                    <div className="font-semibold text-sm">Dorothy L.</div>
+                    <div className="text-xs text-muted-foreground">Miami, FL</div>
                   </div>
                 </div>
               </CardContent>
@@ -288,10 +280,10 @@ export default function LandingPage() {
           <div className="text-center mb-16">
             <Badge variant="outline" className="mb-4">How It Works</Badge>
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
-              Simple Steps to Find Prescribers
+              Simple Steps to Find Your Doctor
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Our streamlined process gets you connected with the right healthcare providers in just three easy steps.
+              Finding a doctor who prescribes your medication is easy with our three-step process.
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-10 items-start">
@@ -302,8 +294,8 @@ export default function LandingPage() {
                 </div>
                 <div className="absolute -top-2 -right-2 w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-xs font-bold">1</div>
               </div>
-              <h3 className="text-2xl font-semibold mb-3 text-foreground">Enter Details</h3>
-              <p className="text-muted-foreground">Input the medication name, your central zipcode, and preferred search radius with our intelligent autocomplete.</p>
+              <h3 className="text-2xl font-semibold mb-3 text-foreground">Enter Your Medication</h3>
+              <p className="text-muted-foreground">Type in the name of the medication you need prescribed - we support both brand names and generic names.</p>
             </div>
             <div className="group flex flex-col items-center text-center p-6 rounded-lg transition-all hover:bg-secondary/20 md:mt-8">
               <div className="relative">
@@ -312,8 +304,8 @@ export default function LandingPage() {
                 </div>
                 <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-500 text-white rounded-full flex items-center justify-center text-xs font-bold">2</div>
               </div>
-              <h3 className="text-2xl font-semibold mb-3 text-foreground">Initiate Search</h3>
-              <p className="text-muted-foreground">Click the search button to instantly query our comprehensive database of verified healthcare providers.</p>
+              <h3 className="text-2xl font-semibold mb-3 text-foreground">Set Your Location</h3>
+              <p className="text-muted-foreground">Enter your zip code and choose how far you're willing to travel to find the right doctor.</p>
             </div>
             <div className="group flex flex-col items-center text-center p-6 rounded-lg transition-all hover:bg-secondary/20 md:mt-16">
               <div className="relative">
@@ -322,8 +314,8 @@ export default function LandingPage() {
                 </div>
                 <div className="absolute -top-2 -right-2 w-6 h-6 bg-purple-500 text-white rounded-full flex items-center justify-center text-xs font-bold">3</div>
               </div>
-              <h3 className="text-2xl font-semibold mb-3 text-foreground">Get Results</h3>
-              <p className="text-muted-foreground">Browse a curated list of matching prescribers, complete with detailed information and distance calculations.</p>
+              <h3 className="text-2xl font-semibold mb-3 text-foreground">Contact Your Doctor</h3>
+              <p className="text-muted-foreground">Get a list of qualified doctors with their contact information, addresses, and specialties so you can schedule an appointment.</p>
             </div>
           </div>
         </div>
@@ -334,42 +326,42 @@ export default function LandingPage() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <Badge variant="outline" className="mb-4">FAQ</Badge>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">Frequently Asked Questions</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">Common Questions</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Get answers to common questions about using RX Prescribers.
+              Get answers to frequently asked questions about finding doctors for your medications.
             </p>
           </div>
           <div className="max-w-3xl mx-auto space-y-6">
             <Card className="border-0 shadow-md">
               <CardHeader>
-                <CardTitle className="text-left">How accurate is the prescriber data?</CardTitle>
+                <CardTitle className="text-left">How much does it cost to use?</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground">Our database is updated regularly and sourced from verified healthcare directories and licensing boards to ensure maximum accuracy and reliability.</p>
+                <p className="text-muted-foreground">We offer affordable subscription plans to help patients find doctors. Our pricing includes access to our comprehensive database and search features.</p>
               </CardContent>
             </Card>
             <Card className="border-0 shadow-md">
               <CardHeader>
-                <CardTitle className="text-left">What medications can I search for?</CardTitle>
+                <CardTitle className="text-left">What if I can't find my medication?</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground">You can search for both brand name and generic medications. Our system recognizes thousands of medications and their various formulations.</p>
+                <p className="text-muted-foreground">Our database includes thousands of medications. Try searching by generic name, brand name, or contact our support team for assistance.</p>
               </CardContent>
             </Card>
             <Card className="border-0 shadow-md">
               <CardHeader>
-                <CardTitle className="text-left">Is there a limit to how many searches I can perform?</CardTitle>
+                <CardTitle className="text-left">Do I need to create an account?</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground">Free users get 10 searches per month. Premium subscribers enjoy unlimited searches plus advanced filtering options and priority support.</p>
+                <p className="text-muted-foreground">Yes, you'll need to create an account and subscribe to access our doctor search features. This helps us maintain our high-quality database and provide you with accurate results.</p>
               </CardContent>
             </Card>
             <Card className="border-0 shadow-md">
               <CardHeader>
-                <CardTitle className="text-left">How current is the prescriber information?</CardTitle>
+                <CardTitle className="text-left">How do I know if a doctor is accepting new patients?</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground">We update our database monthly with the latest prescriber information, including new practices, address changes, and specialty certifications.</p>
+                <p className="text-muted-foreground">We provide doctor contact information so you can call their office directly to check availability and schedule appointments.</p>
               </CardContent>
             </Card>
           </div>
@@ -382,33 +374,33 @@ export default function LandingPage() {
         <div className="container mx-auto px-4 text-center relative z-10">
           <div className="max-w-3xl mx-auto">
             <Badge variant="secondary" className="mb-6 px-4 py-2">
-              🎉 Join 10,000+ Healthcare Professionals
+              💊 Join 15,000+ Patients Who Found Their Doctor
             </Badge>
             <h2 className="text-3xl md:text-5xl font-bold mb-6 text-foreground">
-              Ready to Transform Your <span className="text-primary">Healthcare Practice?</span>
+              Ready to Find Your <span className="text-primary">Perfect Doctor?</span>
             </h2>
             <p className="text-lg text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">
-              Join thousands of healthcare professionals who have streamlined their prescriber search process. Start your free trial today and experience the difference.
+              Don't spend hours calling doctor offices. Use our platform to quickly find doctors who prescribe your medication and are accepting new patients in your area.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
               <HeroCtaButton />
               <Button variant="outline" size="lg" className="group">
                 <Clock className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform" />
-                Book a Demo
+                Learn More
               </Button>
             </div>
             <div className="flex items-center justify-center space-x-8 text-sm text-muted-foreground">
               <div className="flex items-center">
                 <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
-                No Credit Card Required
+                Affordable Plans
               </div>
               <div className="flex items-center">
                 <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
-                30-Day Free Trial
+                No Appointment Needed
               </div>
               <div className="flex items-center">
                 <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
-                Cancel Anytime
+                Find Doctors Instantly
               </div>
             </div>
           </div>
