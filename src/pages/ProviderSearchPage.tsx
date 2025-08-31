@@ -244,7 +244,7 @@ const ProviderSearchPage = () => {
               <Info className="h-4 w-4" />
               <AlertTitle>Connected to Database</AlertTitle>
               <AlertDescription>
-                Searches will query the PostgreSQL database at {process.env.DB_HOSTNAME || 'rxprescribers.com'}.
+                Searches will query the database at api.rxprescribers.com.
                 {clerkToken ? ' Authentication token available.' : ' No authentication token available.'}
                 Current membership tier: {membershipTier || 'none'}
               </AlertDescription>

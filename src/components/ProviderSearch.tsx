@@ -73,7 +73,7 @@ export const ProviderSearch: React.FC<ProviderSearchProps> = ({
   // Always call hooks unconditionally at the top level
   const { membershipTier, loading: authLoading } = useAuth();
   const { getToken } = useClerkAuth();
-  const { searchState, fetchSuggestions } = useSearch();
+  const { searchState } = useSearch();
   const { primaryZipCode } = useClerkUserProfile();
   
   // Initialize all state variables unconditionally
@@ -110,8 +110,8 @@ export const ProviderSearch: React.FC<ProviderSearchProps> = ({
       if (drugInput.length >= 2 && manualSuggestionSearch && !isFetchingSuggestions) {
         try {
           setIsFetchingSuggestions(true);
-          const currentToken = await getToken();
-          await fetchSuggestions(drugInput, currentToken);
+          // Drug suggestions functionality not available yet
+          console.log('Drug suggestions not implemented yet');
           setShowSuggestionsDropdown(true);
         } catch (error) {
           console.error("Error fetching suggestions:", error);
@@ -125,7 +125,7 @@ export const ProviderSearch: React.FC<ProviderSearchProps> = ({
     if (manualSuggestionSearch) {
       fetchSuggestionsWithToken();
     }
-  }, [drugInput, fetchSuggestions, getToken, manualSuggestionSearch, isFetchingSuggestions]);
+  }, [drugInput, getToken, manualSuggestionSearch, isFetchingSuggestions]);
 
   // Sync with parent state
   useEffect(() => {
